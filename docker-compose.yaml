@@ -1,0 +1,27 @@
+services:
+    mongo:
+        image: mongo:latest
+        container_name: mongo_container
+        volumes:
+            - mongo_data:/data/db
+        environment:
+            - MONGO_INITDB_ROOT_USERNAME:root
+            - MONGO_INITDB_ROOT_PASSWORD:root
+        networks:
+            db:
+
+    api:
+        build: .
+        container_name: api
+        ports:
+            - "3000:3000"
+        volumes:
+            -   ./.env:/app/.env
+        networks:
+            db:
+
+volumes:
+    mongo_data:
+
+networks:
+    db:
